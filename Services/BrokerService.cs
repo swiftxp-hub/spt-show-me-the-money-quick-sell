@@ -19,14 +19,22 @@ public class BrokerService
     private static readonly Lazy<BrokerService> instance = new(() => new BrokerService());
 
     private BrokerService() { }
+
     public void Trade(BrokerTradeEnum trade, params Item[] items)
     {
+        bool soldAnyThing = false;
+
         try
         {
             switch (trade)
             {
                 case BrokerTradeEnum.Trader:
-                    Dictionary<string, List<TradeItem>> itemsByTrader = GroupItemsByTraders(items);
+                    Dictionary<string, List<TradeItem>> itemsByTrader = GroupItemsByTraders(items, out List<Item> itemsNotSellableAtTraders);
+                    soldAnyThing = itemsByTrader.Any();
+
+                    if (itemsNotSellableAtTraders.Any())
+                        NotificationsService.Instance.SendLongAlert("Trader can't buy this item".Localized(null));
+
                     foreach (KeyValuePair<string, List<TradeItem>> itemByTrader in itemsByTrader)
                     {
                         SellItemsToTrader(itemByTrader.Key, [.. itemByTrader.Value]);
@@ -39,18 +47,28 @@ public class BrokerService
                     {
                         GetFleaSlotsForUser(out int currentOffersCount, out int maxOffersCount);
 
-                        Dictionary<string, List<TradeItem>> itemsByGroup = GroupItemsByType(items);
+                        Dictionary<string, List<TradeItem>> itemsByGroup = GroupItemsByType(items, out List<Item> itemsNotSellableAtFlea);
+                        soldAnyThing = itemsByGroup.Any();
+
+                        if (itemsNotSellableAtFlea.Any())
+                            NotificationsService.Instance.SendLongAlert("ragfair/This item cannot be placed at ragfair".Localized(null));
+
                         foreach (KeyValuePair<string, List<TradeItem>> itemByGroup in itemsByGroup)
                         {
                             if (currentOffersCount >= maxOffersCount)
                             {
-                                NotificationsService.Instance.SendLongNotice("ragfair/Reached maximum amount of offers".Localized(null));
+                                NotificationsService.Instance.SendLongAlert("ragfair/Reached maximum amount of offers".Localized(null));
                                 break;
                             }
 
                             SellItemsOnFlea([.. itemByGroup.Value]);
                             ++currentOffersCount;
                         }
+                    }
+                    else
+                    {
+                        NotificationsService.Instance.SendLongAlert("ragfair/Unlocked at character LVL {0}".Localized(null).Replace("{0}",
+                            RagFairClass.Settings.minUserLevel.ToString()));
                     }
 
                     break;
@@ -61,14 +79,17 @@ public class BrokerService
         }
         finally
         {
+            if (soldAnyThing)
+            {
+                Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.TradeOperationComplete);
+            }
         }
-
-        Singleton<GUISounds>.Instance.PlayUISound(EUISoundType.TradeOperationComplete);
     }
 
-    private Dictionary<string, List<TradeItem>> GroupItemsByTraders(Item[] items)
+    private Dictionary<string, List<TradeItem>> GroupItemsByTraders(Item[] items, out List<Item> filteredItems)
     {
         Dictionary<string, List<TradeItem>> result = new();
+        filteredItems = new();
 
         foreach (Item item in items)
         {
@@ -85,29 +106,45 @@ public class BrokerService
                     result.Add(tradeItem.TraderPrice!.TraderId!, [tradeItem]);
                 }
             }
+            else
+            {
+                filteredItems.Add(item);
+            }
         }
 
         return result;
     }
 
-    private Dictionary<string, List<TradeItem>> GroupItemsByType(Item[] items)
+    private Dictionary<string, List<TradeItem>> GroupItemsByType(Item[] items, out List<Item> filteredItems)
     {
         Dictionary<string, List<TradeItem>> result = new();
+        filteredItems = new();
 
         foreach (Item item in items)
         {
-            TradeItem tradeItem = new(item);
-            bool hasFleaPrice = FleaPriceService.Instance.GetFleaPrice(tradeItem, false);
-            if (hasFleaPrice)
+            if (item.CanSellOnRagfair)
             {
-                if (result.ContainsKey(tradeItem.Item.TemplateId))
+                TradeItem tradeItem = new(item);
+                bool hasFleaPrice = FleaPriceService.Instance.GetFleaPrice(tradeItem, false);
+                if (hasFleaPrice)
                 {
-                    result[tradeItem.Item.TemplateId].Add(tradeItem);
+                    if (result.ContainsKey(tradeItem.Item.TemplateId))
+                    {
+                        result[tradeItem.Item.TemplateId].Add(tradeItem);
+                    }
+                    else
+                    {
+                        result.Add(tradeItem.Item.TemplateId, [tradeItem]);
+                    }
                 }
                 else
                 {
-                    result.Add(tradeItem.Item.TemplateId, [tradeItem]);
+                    filteredItems.Add(item);
                 }
+            }
+            else
+            {
+                filteredItems.Add(item);
             }
         }
 
@@ -119,7 +156,7 @@ public class BrokerService
         TraderClass traderClass = SptSession.Session.GetTrader(traderId);
 
         int totalPrice = tradeItems.Sum(x => x.TraderPrice!.TotalPrice ?? traderClass.GetUserItemPrice(x.Item)!.Value.Amount);
-        TradingItemReference[] tradingItemReferences = tradeItems.Select(x => new TradingItemReference { Item = x.Item, Count = x.Item.StackObjectsCount }).ToArray();
+        TradingItemReference[] tradingItemReferences = [.. tradeItems.Select(x => new TradingItemReference { Item = x.Item, Count = x.Item.StackObjectsCount })];
 
         traderClass.iTraderInteractions.ConfirmSell(
             traderId,
@@ -131,7 +168,7 @@ public class BrokerService
 
     private void SellItemsOnFlea(TradeItem[] tradeItems)
     {
-        string[] itemIds = tradeItems.Select(x => x.Item.Id).ToArray();
+        string[] itemIds = [.. tradeItems.Select(x => x.Item.Id)];
 
         GClass2102[] requirements = [new()
         {

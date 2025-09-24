@@ -34,8 +34,11 @@ public class Plugin : BaseUnityPlugin
         SimpleSptLogger.Instance.LogInfo("Enable patches...");
 
         new ItemViewOnClickPatch().Enable();
-        // new SimpleContextMenuPatch().Enable();
+        new InventoryScreenClosePatch().Enable();
+        new InventoryScreenShowPatch().Enable();
     }
 
     public static PluginConfiguration? Configuration;
+
+    public static bool IsInInventoryScreen;
 }
