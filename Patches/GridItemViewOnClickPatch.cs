@@ -110,13 +110,14 @@ public class ItemViewOnClickPatch : ModulePatch
             }
         }
 
-        return itemsToSell;
+        return sellableItems;
     }
 
     private static bool ItemMeetsRequirements(Item item)
     {
         return SptSession.Session.Profile.Examined(item)
             && (!item.IsContainer || (item.IsContainer && item.IsEmpty()))
+            && item.PinLockState != EItemPinLockState.Locked
             && !(item.Owner.OwnerType != EOwnerType.Profile && item.Owner.GetType() == typeof(TraderControllerClass));
     }
 }
