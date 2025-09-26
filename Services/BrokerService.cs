@@ -5,6 +5,7 @@ using Comfort.Common;
 using EFT.InventoryLogic;
 using EFT.Trading;
 using EFT.UI;
+using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.Constants;
 using SwiftXP.SPT.Common.Notifications;
 using SwiftXP.SPT.Common.Sessions;
@@ -43,7 +44,7 @@ public class BrokerService
                     break;
 
                 case BrokerTradeEnum.Flea:
-                    if (SptSession.Session.RagFair.Available)
+                    if (SptSession.Session.RagFair.Available || Plugin.Configuration!.AllowUnderleveledFleaSales.IsEnabled())
                     {
                         GetFleaSlotsForUser(out int currentOffersCount, out int maxOffersCount);
 
@@ -55,7 +56,7 @@ public class BrokerService
 
                         foreach (KeyValuePair<string, List<TradeItem>> itemByGroup in itemsByGroup)
                         {
-                            if (currentOffersCount >= maxOffersCount)
+                            if (!Plugin.Configuration!.AllowAnyNumberOfFleaOffers.IsEnabled() && currentOffersCount >= maxOffersCount)
                             {
                                 NotificationsService.Instance.SendLongAlert("ragfair/Reached maximum amount of offers".Localized(null));
                                 break;
