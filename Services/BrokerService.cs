@@ -44,7 +44,7 @@ public class BrokerService
                     break;
 
                 case BrokerTradeEnum.Flea:
-                    if (SptSession.Session.RagFair.Available || Plugin.Configuration!.AllowUnderleveledFleaSales.IsEnabled())
+                    if (SptSession.Session.RagFair.Available)
                     {
                         GetFleaSlotsForUser(out int currentOffersCount, out int maxOffersCount);
 
