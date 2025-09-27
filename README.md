@@ -13,11 +13,11 @@ It allows you to quickly sell items from your inventory to traders or on the fle
 
 The configuration settings from the "Show Me The Money" SPT-mod are taken into account by this quick-sale companion mod.
 
-Please note that this is an early version of this mod and it is always advisable to back up your SPT profiles before installing new mods.
+Please note that it is always advisable to back up your SPT profiles before installing new mods.
 
 ## Requirements
 
-- [Show Me The Money SPT-mod](https://github.com/swiftxp-hub/spt-show-me-the-money) v1.5.3
+- [Show Me The Money SPT-mod](https://github.com/swiftxp-hub/spt-show-me-the-money) v1.6.0
 
 ## Installation
 
@@ -51,7 +51,7 @@ Please use the BepInEx configurator to configure features of the mod (usually ac
 
 ## Support and feature requests
 
-Please note that I maintain all my mods in my spare time. Therefore, I can only invest a limited amount of time, especially when it comes to support requests. The following principle always applies to support requests: No logs, no support.
+Please note that I maintain all my mods in my spare time. Therefore, I can only invest a limited amount of time, especially when it comes to support requests.
 
 ## Features that may come in the future
 
