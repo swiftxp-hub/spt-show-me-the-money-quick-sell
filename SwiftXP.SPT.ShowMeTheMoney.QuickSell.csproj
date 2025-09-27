@@ -6,7 +6,7 @@
 
     <AssemblyName>SwiftXP.SPT.ShowMeTheMoney.QuickSell</AssemblyName>
     <Product>Show Me The Money - Quick Sell</Product>
-    <Version>0.1.1</Version>
+    <Version>0.1.2</Version>
     <RestoreAdditionalProjectSources>
       https://api.nuget.org/v3/index.json;
       https://nuget.bepinex.dev/v3/index.json

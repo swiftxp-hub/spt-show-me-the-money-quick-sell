@@ -9,6 +9,7 @@ using EFT.UI.DragAndDrop;
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using SwiftXP.SPT.Common.ConfigurationManager;
+using SwiftXP.SPT.Common.EFT;
 using SwiftXP.SPT.Common.Loggers;
 using SwiftXP.SPT.Common.Sessions;
 using SwiftXP.SPT.ShowMeTheMoney.Patches;
@@ -35,7 +36,7 @@ public class ItemViewOnClickPatch : ModulePatch
                 || __instance.Item == null
                 || !Plugin.Configuration!.EnablePlugin.IsEnabled()
                 || !Plugin.Configuration!.QuickSellKey.Value.IsPressed()
-                || IsInRaid())
+                || EFTHelper.IsInRaid)
             {
                 return true;
             }
@@ -81,13 +82,6 @@ public class ItemViewOnClickPatch : ModulePatch
         }
 
         return result;
-    }
-
-    private static bool IsInRaid()
-    {
-        bool? inRaid = Singleton<AbstractGame>.Instance?.InRaid;
-
-        return inRaid.HasValue && inRaid.Value;
     }
 
     private static List<Item> GetItemsToSell(GridItemView __instance)

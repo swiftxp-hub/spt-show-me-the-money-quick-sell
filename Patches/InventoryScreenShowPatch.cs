@@ -2,6 +2,7 @@ using System.Reflection;
 using EFT.UI;
 using HarmonyLib;
 using SPT.Reflection.Patching;
+using SwiftXP.SPT.Common.EFT;
 
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Patches;
 
@@ -13,6 +14,7 @@ public class InventoryScreenShowPatch : ModulePatch
     [PatchPostfix]
     public static void PatchPostfix(InventoryScreen __instance)
     {
-        Plugin.IsInInventoryScreen = true;
+        if (!EFTHelper.IsInRaid)
+            Plugin.IsInInventoryScreen = true;
     }
 }

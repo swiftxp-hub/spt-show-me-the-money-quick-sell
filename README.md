@@ -1,7 +1,8 @@
 # Show Me The Money - Quick-Sell SPT-mod
 
 A BepInEx plugin for SPT (Single Player Tarkov).
-**<span style="color:red">Please note that this plug-in only works in conjunction with the [Show Me The Money SPT-mod](https://github.com/swiftxp-hub/spt-show-me-the-money).</span>**
+
+**Please note that this plug-in only works in conjunction with the [Show Me The Money SPT-mod](https://github.com/swiftxp-hub/spt-show-me-the-money).**
 
 ## What does it do?
 
@@ -16,7 +17,7 @@ Please note that this is an early version of this mod and it is always advisable
 
 ## Requirements
 
-- [Show Me The Money SPT-mod](github.com/swiftxp-hub/spt-show-me-the-money) v1.5.3
+- [Show Me The Money SPT-mod](https://github.com/swiftxp-hub/spt-show-me-the-money) v1.5.3
 
 ## Installation
 
@@ -33,8 +34,7 @@ There is no need to install anything to your Fika headless client for this mod t
 
 Please use the BepInEx configurator to configure features of the mod (usually accessible by pressing F12 or F1 when you are in-game):
 
-![BepInEx Plugin Configuration](https://raw.githubusercontent.com/swiftxp-hub/spt-show-me-the-money-quick-sell/refs/heads/main/Assets/plugin-configuration.png)<br />
-*(Default configuration with freshly installed mod)*
+![BepInEx Plugin Configuration](https://raw.githubusercontent.com/swiftxp-hub/spt-show-me-the-money-quick-sell/refs/heads/main/Assets/plugin-configuration.png)
 
 ## Remarks
 
@@ -51,7 +51,7 @@ Please use the BepInEx configurator to configure features of the mod (usually ac
 
 ## Support and feature requests
 
-Please note that I maintain all my mods in my spare time. Therefore, I can only invest a limited amount of time, especially when it comes to support requests. The following principle always applies to support requests: No logs, no support. [Please follow this link to the SPT FAQ to find your logs](https://hub.sp-tarkov.com/faq-question/64-where-can-i-find-my-log-files/).
+Please note that I maintain all my mods in my spare time. Therefore, I can only invest a limited amount of time, especially when it comes to support requests. The following principle always applies to support requests: No logs, no support.
 
 ## Features that may come in the future
 
