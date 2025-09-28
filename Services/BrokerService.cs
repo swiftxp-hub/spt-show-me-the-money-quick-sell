@@ -173,7 +173,7 @@ public class BrokerService
 
         GClass2102[] requirements = [new()
         {
-            count = tradeItems.First().FleaPrice!.GetTotalPriceInRouble(),
+            count = tradeItems.First().FleaPrice!.SingleObjectPrice,
             _tpl = SptConstants.CurrencyIds.Roubles
         }];
 
