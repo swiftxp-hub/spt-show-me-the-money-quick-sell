@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Comfort.Common;
-using EFT;
 using EFT.InventoryLogic;
 using EFT.UI.DragAndDrop;
 using HarmonyLib;
@@ -112,6 +110,19 @@ public class ItemViewOnClickPatch : ModulePatch
         return SptSession.Session.Profile.Examined(item)
             && (!item.IsContainer || (item.IsContainer && item.IsEmpty()))
             && item.PinLockState != EItemPinLockState.Locked
+            && ItemIsFirAndAllowToBeSold(item)
             && !(item.Owner.OwnerType != EOwnerType.Profile && item.Owner.GetType() == typeof(TraderControllerClass));
+    }
+
+    private static bool ItemIsFirAndAllowToBeSold(Item item)
+    {
+        if (Plugin.Configuration!.DoNotSellFoundInRaidItems.IsEnabled()
+            && item.MarkedAsSpawnedInSession
+            && !Plugin.Configuration!.ForceSellFoundInRaidItemsKey.Value.IsPressed())
+        {
+            return false;
+        }
+
+        return true;
     }
 }
