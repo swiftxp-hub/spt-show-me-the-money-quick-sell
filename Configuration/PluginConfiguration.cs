@@ -18,7 +18,7 @@ public class PluginConfiguration
 
         this.DoNotSellFoundInRaidItems = configFile.BindConfiguration("2. Flea market", "Do not sell items which are found in raid", false, $"Prevents items found in the raid from being sold. Selling items found in raid can still be forced using the configured key.{Environment.NewLine}{Environment.NewLine}(Default: Disabled)", 1);
 
-        this.ForceSellFoundInRaidItemsKey = configFile.BindConfiguration("2. Flea market", "Force sell found in raid items key", new KeyboardShortcut(KeyCode.Q, KeyCode.LeftAlt), $"Specifies which key or key combination must be pressed in conjunction with the left or right mouse button to quickly sell items, ignoring the \"Found in Raid\" status.{Environment.NewLine}{Environment.NewLine}(Default: Q + Left alt)", 0);
+        this.ForceSellFoundInRaidItemsKey = configFile.BindConfiguration("2. Flea market", "Force sell found in raid items key", new KeyboardShortcut(KeyCode.Q, KeyCode.LeftAlt), $"Specifies which key or key combination must be pressed in conjunction with the left or right mouse button to quickly sell items, ignoring the \"Found in Raid\" status. Can only be used if the option \"Do not sell items which are found in raid\" is enabled.{Environment.NewLine}{Environment.NewLine}(Default: Q + Left alt)", 0);
 
         configFile.SaveOnConfigSet = true;
     }
