@@ -33,7 +33,7 @@ public class ItemViewOnClickPatch : ModulePatch
                 || __instance == null
                 || __instance.Item == null
                 || !Plugin.Configuration!.EnablePlugin.IsEnabled()
-                || !Plugin.Configuration!.QuickSellKey.Value.IsPressed()
+                || !IsQuickSellKeyPressed()
                 || EFTHelper.IsInRaid)
             {
                 return true;
@@ -124,5 +124,16 @@ public class ItemViewOnClickPatch : ModulePatch
         }
 
         return true;
+    }
+
+    private static bool IsQuickSellKeyPressed()
+    {
+        if (Plugin.Configuration!.QuickSellKey.Value.IsPressed())
+            return true;
+
+        if (Plugin.Configuration!.DoNotSellFoundInRaidItems.IsEnabled() && Plugin.Configuration!.ForceSellFoundInRaidItemsKey.Value.IsPressed())
+            return true;
+
+        return false;
     }
 }
