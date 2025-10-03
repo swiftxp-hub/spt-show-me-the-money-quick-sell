@@ -4,5 +4,7 @@ public enum BrokerTradeEnum
 {
     Trader,
 
-    Flea
+    Flea,
+
+    Best
 }

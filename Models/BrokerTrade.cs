@@ -1,17 +1,20 @@
-using EFT.InventoryLogic;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Enums;
+using System.Collections.Generic;
+using SwiftXP.SPT.ShowMeTheMoney.Models;
 
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Models;
 
 public class BrokerTrade
 {
-    public BrokerTrade(BrokerTradeEnum trade, Item item)
+    public BrokerTrade(string itemTemplateId, int price, params TradeItem[] items)
     {
-        this.Trade = trade;
-        this.Item = item;
+        this.ItemTemplateId = itemTemplateId;
+        this.Price = price;
+        this.Items.AddRange(items);
     }
 
-    public BrokerTradeEnum Trade { get; private set; }
+    public string ItemTemplateId { get; set; }
 
-    public Item Item { get; private set; }
+    public int Price { get; set; }
+
+    public List<TradeItem> Items { get; private set; } = new();
 }

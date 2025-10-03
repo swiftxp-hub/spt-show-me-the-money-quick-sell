@@ -63,6 +63,15 @@ public class ItemViewOnClickPatch : ModulePatch
 
                         break;
 
+                    case PointerEventData.InputButton.Middle:
+                        if (ShowMeTheMoney.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
+                        {
+                            BrokerService.Instance.Trade(Enums.BrokerTradeEnum.Best, [.. itemsToSell]);
+                            result = false;
+                        }
+
+                        break;
+
                     default:
                         break;
                 }

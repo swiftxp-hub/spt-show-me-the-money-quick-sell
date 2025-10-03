@@ -1,8 +1,10 @@
 # Show Me The Money - Quick-Sell SPT-mod
 
-A BepInEx plugin for SPT (Single Player Tarkov).
+A client modification for SPT (Single Player Tarkov).
 
-**Please note that this plug-in only works in conjunction with the [Show Me The Money SPT-mod](https://github.com/swiftxp-hub/spt-show-me-the-money).**
+**Please note that this mod only works in conjunction with the [Show Me The Money SPT-mod](https://forge.sp-tarkov.com/mod/2299/show-me-the-money).**
+
+**Warning:** There is a bug in version 1.0.0 and older versions with stackable items (bullets) and selling them on the flea-market. The wrong (total instead of per bullet) price is used to sell it on the flea-market. A hot-fix is available (version 1.0.1 or newer).
 
 ## What does it do?
 
@@ -10,14 +12,17 @@ It allows you to quickly sell items from your inventory to traders or on the fle
 
 - Q + Left-mouse click => Sell to trader
 - Q + Right-mouse click => Sell on flea market
+- Q + Middle-mouse click => Sell at the best price (trader or flea market)
 
 The configuration settings from the "Show Me The Money" SPT-mod are taken into account by this quick-sale companion mod.
+
+[UIFixes](https://forge.sp-tarkov.com/mod/1342/ui-fixes) v4.2.2 or later by Tyfon is supported and with the help of multi-selection, several items can be sold at the same time. Items of the same type are bundled automatically when selling on the flea market.
 
 Please note that it is always advisable to back up your SPT profiles before installing new mods.
 
 ## Requirements
 
-- [Show Me The Money SPT-mod](https://github.com/swiftxp-hub/spt-show-me-the-money) v1.6.0
+- [Show Me The Money SPT-mod](https://forge.sp-tarkov.com/mod/2299/show-me-the-money) v1.6.0 or newer
 
 ## Installation
 
@@ -42,7 +47,7 @@ Please use the BepInEx configurator to configure features of the mod (usually ac
 
 ## Known compatibility
 
-- [UIFixes](https://github.com/tyfon7/UIFixes) v4.2.2 by Tyfon. Yes, with the help of multi-selection, several items can be sold at the same time.
+- [UIFixes](https://forge.sp-tarkov.com/mod/1342/ui-fixes) v4.2.2 or later by Tyfon. 
 
 ## Tested environment
 
@@ -55,5 +60,6 @@ Please note that I maintain all my mods in my spare time. Therefore, I can only 
 
 ## Features that may come in the future
 
+- More info, like if items could not be sold. In particular, selling using the middle mouse button currently provides little information.
 - Quick-sell via context-menu (right-mouse click on items)
 - What-ever comes to my mind or by feature-requests in the comments/SPT-discord
