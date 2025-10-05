@@ -48,7 +48,7 @@ public class ItemViewOnClickPatch : ModulePatch
                     case PointerEventData.InputButton.Left:
                         if (ShowMeTheMoney.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
                         {
-                            BrokerService.Instance.Trade(Enums.BrokerTradeEnum.Trader, [.. itemsToSell]);
+                            BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Trader, [.. itemsToSell]);
                             result = false;
                         }
 
@@ -57,7 +57,7 @@ public class ItemViewOnClickPatch : ModulePatch
                     case PointerEventData.InputButton.Right:
                         if (ShowMeTheMoney.Plugin.Configuration!.EnableFleaPrices.IsEnabled())
                         {
-                            BrokerService.Instance.Trade(Enums.BrokerTradeEnum.Flea, [.. itemsToSell]);
+                            BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Flea, [.. itemsToSell]);
                             result = false;
                         }
 
@@ -66,7 +66,7 @@ public class ItemViewOnClickPatch : ModulePatch
                     case PointerEventData.InputButton.Middle:
                         if (ShowMeTheMoney.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
                         {
-                            BrokerService.Instance.Trade(Enums.BrokerTradeEnum.Best, [.. itemsToSell]);
+                            BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Best, [.. itemsToSell]);
                             result = false;
                         }
 
