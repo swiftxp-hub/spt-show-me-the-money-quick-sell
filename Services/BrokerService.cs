@@ -44,10 +44,10 @@ public class BrokerService
                     SplitItemsIntoBestTrade(items, out List<Item> traderItems, out List<Item> fleaItems, out List<Item> unsellableItems);
 
                     if (fleaItems.Any())
-                        TradeOnFlea([.. fleaItems]);
+                        soldAnyThing |= TradeOnFlea([.. fleaItems]);
 
                     if (traderItems.Any())
-                        TradeToTraders([.. traderItems]);
+                        soldAnyThing |= TradeToTraders([.. traderItems]);
 
                     break;
 
