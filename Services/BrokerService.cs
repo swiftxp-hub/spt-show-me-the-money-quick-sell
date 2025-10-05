@@ -137,14 +137,20 @@ public class BrokerService
         fleaItems = [];
         unsellableItems = [];
 
+        List<(TradeItem, bool, bool)> tradeItems = [];
         foreach (Item item in items)
         {
-            bool tradeToTrader = false;
-            bool tradeToFlea = SptSession.Session.RagFair.Available && (Plugin.Configuration!.AllowAnyNumberOfFleaOffers.IsEnabled() || currentOffersCount < maxOffersCount);
-
             TradeItem tradeItem = new(item);
             bool hasTraderPrice = TraderPriceService.Instance.GetBestTraderPrice(tradeItem);
             bool hasFleaPrice = FleaPriceService.Instance.GetFleaPrice(tradeItem, true);
+
+            tradeItems.Add(new(tradeItem, hasTraderPrice, hasFleaPrice));
+        }
+
+        foreach ((TradeItem tradeItem, bool hasTraderPrice, bool hasFleaPrice) in tradeItems)
+        {
+            bool tradeToTrader = false;
+            bool tradeToFlea = SptSession.Session.RagFair.Available && (Plugin.Configuration!.AllowAnyNumberOfFleaOffers.IsEnabled() || currentOffersCount < maxOffersCount);
 
             if ((hasTraderPrice && hasFleaPrice && tradeItem.TraderPrice!.GetComparePriceInRouble() > tradeItem.FleaPrice!.GetComparePriceInRouble())
                 || (hasTraderPrice && !hasFleaPrice))
@@ -160,16 +166,16 @@ public class BrokerService
 
             if (tradeToFlea)
             {
-                fleaItems.Add(item);
+                fleaItems.Add(tradeItem.Item);
                 ++currentOffersCount;
             }
             else if (tradeToTrader)
             {
-                traderItems.Add(item);
+                traderItems.Add(tradeItem.Item);
             }
             else
             {
-                unsellableItems.Add(item);
+                unsellableItems.Add(tradeItem.Item);
             }
         }
     }
