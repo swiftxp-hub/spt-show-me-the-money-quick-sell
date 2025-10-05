@@ -8,7 +8,7 @@ A client modification for SPT (Single Player Tarkov).
 
 ## What does it do?
 
-It allows you to quickly sell items from your inventory to traders or on the flea market using a configurable keyboard shortcut and the left or right mouse button. By default...
+It allows you to quickly sell items from your inventory to traders or on the flea market using a configurable keyboard shortcut and the left, middle or right mouse button. By default...
 
 - Q + Left-mouse click => Sell to trader
 - Q + Right-mouse click => Sell on flea market
@@ -22,7 +22,7 @@ Please note that it is always advisable to back up your SPT profiles before inst
 
 ## Requirements
 
-- [Show Me The Money SPT-mod](https://forge.sp-tarkov.com/mod/2299/show-me-the-money) v1.6.0 or newer
+- [Show Me The Money SPT-mod](https://forge.sp-tarkov.com/mod/2299/show-me-the-money) v1.6.1 or newer
 
 ## Installation
 
