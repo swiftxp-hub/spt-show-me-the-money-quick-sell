@@ -4,7 +4,7 @@ using HarmonyLib;
 using SPT.Reflection.Patching;
 using SwiftXP.SPT.Common.EFT;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Patches;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 
 public class InventoryScreenClosePatch : ModulePatch
 {

@@ -10,12 +10,12 @@ using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.Constants;
 using SwiftXP.SPT.Common.Notifications;
 using SwiftXP.SPT.Common.Sessions;
-using SwiftXP.SPT.ShowMeTheMoney.Models;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Enums;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Models;
-using SwiftXP.SPT.ShowMeTheMoney.Services;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Models;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Services;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Enums;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Services;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Services;
 
 public class BrokerService
 {
@@ -165,7 +165,7 @@ public class BrokerService
         int totalPrice = tradeItems.Sum(x => x.TraderPrice!.TotalPrice ?? traderClass.GetUserItemPrice(x.Item)!.Value.Amount);
         TradingItemReference[] tradingItemReferences = [.. tradeItems.Select(x => new TradingItemReference { Item = x.Item, Count = x.Item.StackObjectsCount })];
 
-        traderClass.iTraderInteractions.ConfirmSell(
+        traderClass.ITraderInteractions.ConfirmSell(
             traderId,
             tradingItemReferences,
             totalPrice,
@@ -177,7 +177,7 @@ public class BrokerService
     {
         string[] itemIds = [.. tradeItems.Select(x => x.Item.Id)];
 
-        GClass2102[] requirements = [new()
+        GClass2335[] requirements = [new()
         {
             count = price,
             _tpl = SptConstants.CurrencyIds.Roubles

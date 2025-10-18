@@ -29,7 +29,7 @@ Please note that it is always advisable to back up your SPT profiles before inst
 Extract the contents of the .zip file into your SPT directory. 
 
 You should end up having the following files copied to your SPT directory:
-- C:\yourSPTfolder\BepInEx\plugins\SwiftXP.SPT.ShowMeTheMoney.QuickSell.dll
+- C:\yourSPTfolder\BepInEx\plugins\SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.dll
 
 ### If you use the Fika headless client
 

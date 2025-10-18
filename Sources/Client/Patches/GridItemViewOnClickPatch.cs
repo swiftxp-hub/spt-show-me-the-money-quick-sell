@@ -10,12 +10,12 @@ using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.EFT;
 using SwiftXP.SPT.Common.Loggers;
 using SwiftXP.SPT.Common.Sessions;
-using SwiftXP.SPT.ShowMeTheMoney.Patches;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Services;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Patches;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Patches;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 
 public class ItemViewOnClickPatch : ModulePatch
 {
@@ -46,7 +46,7 @@ public class ItemViewOnClickPatch : ModulePatch
                 switch (button)
                 {
                     case PointerEventData.InputButton.Left:
-                        if (ShowMeTheMoney.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
+                        if (ShowMeTheMoney.Client.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
                         {
                             BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Trader, [.. itemsToSell]);
                             result = false;
@@ -55,7 +55,7 @@ public class ItemViewOnClickPatch : ModulePatch
                         break;
 
                     case PointerEventData.InputButton.Right:
-                        if (ShowMeTheMoney.Plugin.Configuration!.EnableFleaPrices.IsEnabled())
+                        if (ShowMeTheMoney.Client.Plugin.Configuration!.EnableFleaPrices.IsEnabled())
                         {
                             BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Flea, [.. itemsToSell]);
                             result = false;
@@ -64,7 +64,7 @@ public class ItemViewOnClickPatch : ModulePatch
                         break;
 
                     case PointerEventData.InputButton.Middle:
-                        if (ShowMeTheMoney.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
+                        if (ShowMeTheMoney.Client.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
                         {
                             BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Best, [.. itemsToSell]);
                             result = false;
@@ -79,7 +79,7 @@ public class ItemViewOnClickPatch : ModulePatch
 
             if (!result)
             {
-                ShowMeTheMoney.Plugin.HoveredItem = null;
+                ShowMeTheMoney.Client.Plugin.HoveredItem = null;
                 SimpleTooltipShowPatch.Instance?.Close();
             }
         }

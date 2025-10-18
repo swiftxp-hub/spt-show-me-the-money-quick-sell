@@ -3,7 +3,7 @@ using SwiftXP.SPT.Common.ConfigurationManager;
 using System;
 using UnityEngine;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Configuration;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Configuration;
 
 public class PluginConfiguration
 {

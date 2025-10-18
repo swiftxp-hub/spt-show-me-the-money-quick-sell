@@ -1,12 +1,12 @@
 ﻿using BepInEx;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Configuration;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Configuration;
 using SwiftXP.SPT.Common.Loggers;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Patches;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client;
 
-[BepInPlugin(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-[BepInDependency("SwiftXP.SPT.ShowMeTheMoney", "1.5.3")]
+[BepInPlugin("com.swiftxp.spt.showmethemoney.quicksell", MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
+[BepInDependency("com.swiftxp.spt.showmethemoney", "2.0.0")]
 [BepInProcess("EscapeFromTarkov.exe")]
 public class Plugin : BaseUnityPlugin
 {
