@@ -64,11 +64,8 @@ public class ItemViewOnClickPatch : ModulePatch
                         break;
 
                     case PointerEventData.InputButton.Middle:
-                        if (ShowMeTheMoney.Client.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
-                        {
-                            BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Best, [.. itemsToSell]);
-                            result = false;
-                        }
+                        BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Best, [.. itemsToSell]);
+                        result = false;
 
                         break;
 
@@ -95,10 +92,7 @@ public class ItemViewOnClickPatch : ModulePatch
     {
         List<Item> itemsToSell = [];
 
-        if (UIFixesInterop.MultiSelect.Count > 0)
-            itemsToSell.AddRange(UIFixesInterop.MultiSelect.Items);
-
-        else if (__instance?.Item is not null)
+        if (__instance?.Item is not null)
             itemsToSell.Add(__instance!.Item);
 
         List<Item> sellableItems = [];
