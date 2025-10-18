@@ -7,7 +7,6 @@ namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client;
 
 [BepInPlugin("com.swiftxp.spt.showmethemoney.quicksell", MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInDependency("com.swiftxp.spt.showmethemoney", "2.0.0")]
-[BepInDependency("Tyfon.UIFixes", BepInDependency.DependencyFlags.SoftDependency)]
 [BepInProcess("EscapeFromTarkov.exe")]
 public class Plugin : BaseUnityPlugin
 {
