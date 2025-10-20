@@ -8,6 +8,7 @@ using EFT.Trading;
 using EFT.UI;
 using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.Constants;
+using SwiftXP.SPT.Common.Loggers;
 using SwiftXP.SPT.Common.Notifications;
 using SwiftXP.SPT.Common.Sessions;
 using SwiftXP.SPT.ShowMeTheMoney.Client.Models;
@@ -101,10 +102,14 @@ public class BrokerService
     {
         List<BrokerFleaTrade> result = [];
 
+        SimpleSptLogger.Instance.LogInfo($"{tradeItems.Count} trade items...");
+
         GetFleaSlotsForUser(out int currentOffersCount, out int maxOffersCount);
 
         foreach (TradeItem tradeItem in tradeItems.OrderByDescending(x => x.FleaPrice?.SingleObjectPrice ?? int.MinValue))
         {
+            SimpleSptLogger.Instance.LogInfo($"{tradeItem.Item.LocalizedName()}...");
+
             if (tradeItem.Item.CanSellOnRagfair && tradeItem.FleaPrice != null
                 && (tradeItem.TraderPrice is null || tradeItem.FleaPrice.GetComparePriceInRouble() > tradeItem.TraderPrice.GetComparePriceInRouble()))
             {
@@ -120,10 +125,22 @@ public class BrokerService
             }
         }
 
-        foreach (TradeItem tradeItem in result.SelectMany(x => x.TradeItems))
+        SimpleSptLogger.Instance.LogInfo($"{result.Count} broker items...");
+
+        List<TradeItem> enumerable = result.SelectMany(x => x.TradeItems).ToList();
+
+        SimpleSptLogger.Instance.LogInfo($"{enumerable.Count()} trade items Penis...");
+
+        foreach (TradeItem tradeItem in enumerable)
         {
+            SimpleSptLogger.Instance.LogInfo($"Removing A...");
+
             tradeItems.Remove(tradeItem);
+
+            SimpleSptLogger.Instance.LogInfo($"Removing B...");
         }
+
+        SimpleSptLogger.Instance.LogInfo($"lala...");
 
         return result;
     }

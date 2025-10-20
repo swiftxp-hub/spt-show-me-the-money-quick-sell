@@ -24,7 +24,7 @@
 
   <ItemGroup>
     <Reference Include="$(MSBuildThisFileDirectory)\..\..\..\spt4-shared-dlls\*.dll" />
-    <Reference Include="$(MSBuildThisFileDirectory)\..\..\..\spt-show-me-the-money-spt4\Sources\Client\bin\Release\netstandard2.1\SwiftXP.SPT.ShowMeTheMoney.Client.dll" />
+    <Reference Include="$(MSBuildThisFileDirectory)\..\..\..\spt-show-me-the-money\Sources\Client\bin\Release\netstandard2.1\SwiftXP.SPT.ShowMeTheMoney.Client.dll" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">

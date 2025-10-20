@@ -92,8 +92,17 @@ public class ItemViewOnClickPatch : ModulePatch
     {
         List<Item> itemsToSell = [];
 
-        if (__instance?.Item is not null)
+        if (UIFixesInterop.MultiSelect.Count > 0)
+        {
+            SimpleSptLogger.Instance.LogInfo($"{UIFixesInterop.MultiSelect.Count} in multi-select...");
+            itemsToSell.AddRange([.. UIFixesInterop.MultiSelect.Items]);
+        }
+
+        else if (__instance?.Item is not null)
+        {
+            SimpleSptLogger.Instance.LogInfo($"Single item...");
             itemsToSell.Add(__instance!.Item);
+        }
 
         List<Item> sellableItems = [];
 
