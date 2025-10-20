@@ -21,7 +21,7 @@ The configuration settings from the "Show Me The Money" SPT-mod are taken into a
 
 #### Requirements
 
-- [Show Me The Money SPT-mod](https://forge.sp-tarkov.com/mod/2299/show-me-the-money) v2.0.0 or newer
+- [Show Me The Money SPT-mod](https://forge.sp-tarkov.com/mod/2299/show-me-the-money) v2.0.1 or newer
 
 #### Installation
 
