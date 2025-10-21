@@ -1,13 +1,12 @@
 ﻿using BepInEx;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Configuration;
 using SwiftXP.SPT.Common.Loggers;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Configuration;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client;
 
 [BepInPlugin("com.swiftxp.spt.showmethemoney.quicksell", MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
 [BepInDependency("com.swiftxp.spt.showmethemoney", "2.0.1")]
-[BepInDependency("Tyfon.UIFixes", BepInDependency.DependencyFlags.SoftDependency)]
 [BepInProcess("EscapeFromTarkov.exe")]
 public class Plugin : BaseUnityPlugin
 {
@@ -34,7 +33,7 @@ public class Plugin : BaseUnityPlugin
     {
         SimpleSptLogger.Instance.LogInfo("Enable patches...");
 
-        new ItemViewOnClickPatch().Enable();
+        new GridItemViewOnClickPatch().Enable();
         new InventoryScreenClosePatch().Enable();
         new InventoryScreenShowPatch().Enable();
     }

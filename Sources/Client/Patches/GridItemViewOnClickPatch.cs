@@ -17,7 +17,7 @@ using UnityEngine.EventSystems;
 
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 
-public class ItemViewOnClickPatch : ModulePatch
+public class GridItemViewOnClickPatch : ModulePatch
 {
     protected override MethodBase GetTargetMethod() =>
         AccessTools.FirstMethod(typeof(GridItemView), x => x.Name == nameof(GridItemView.OnClick));
@@ -93,16 +93,10 @@ public class ItemViewOnClickPatch : ModulePatch
         List<Item> itemsToSell = [];
 
         if (UIFixesInterop.MultiSelect.Count > 0)
-        {
-            SimpleSptLogger.Instance.LogInfo($"{UIFixesInterop.MultiSelect.Count} in multi-select...");
             itemsToSell.AddRange([.. UIFixesInterop.MultiSelect.Items]);
-        }
 
         else if (__instance?.Item is not null)
-        {
-            SimpleSptLogger.Instance.LogInfo($"Single item...");
             itemsToSell.Add(__instance!.Item);
-        }
 
         List<Item> sellableItems = [];
 
