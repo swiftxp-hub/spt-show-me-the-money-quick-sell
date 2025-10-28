@@ -6,6 +6,7 @@ using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client;
 
 [BepInPlugin("com.swiftxp.spt.showmethemoney.quicksell", MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
+[BepInDependency("com.SPT.custom", "4.0.2")]
 [BepInDependency("com.swiftxp.spt.showmethemoney", "2.0.1")]
 [BepInProcess("EscapeFromTarkov.exe")]
 public class Plugin : BaseUnityPlugin
@@ -19,19 +20,19 @@ public class Plugin : BaseUnityPlugin
 
     private void InitLogger()
     {
-        SimpleSptLogger.Instance.Init(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION);
+        SptLogger = new SimpleSptLogger(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION);
     }
 
     private void BindBepInExConfiguration()
     {
-        SimpleSptLogger.Instance.LogInfo("Bind configuration...");
+        SptLogger!.LogInfo("Bind configuration...");
 
         Configuration = new PluginConfiguration(Config);
     }
 
     private void EnablePatches()
     {
-        SimpleSptLogger.Instance.LogInfo("Enable patches...");
+        SptLogger!.LogInfo("Enable patches...");
 
         new GridItemViewOnClickPatch().Enable();
         new InventoryScreenClosePatch().Enable();
@@ -39,6 +40,8 @@ public class Plugin : BaseUnityPlugin
     }
 
     public static PluginConfiguration? Configuration;
+
+    public static SimpleSptLogger? SptLogger;
 
     public static bool IsInInventoryScreen;
 }

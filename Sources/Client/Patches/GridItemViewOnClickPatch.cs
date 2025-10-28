@@ -82,7 +82,7 @@ public class GridItemViewOnClickPatch : ModulePatch
         }
         catch (Exception exception)
         {
-            SimpleSptLogger.Instance.LogException(exception);
+            Plugin.SptLogger!.LogException(exception);
         }
 
         return result;
