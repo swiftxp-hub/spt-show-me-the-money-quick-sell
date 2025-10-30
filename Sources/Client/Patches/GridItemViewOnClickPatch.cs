@@ -46,7 +46,7 @@ public class GridItemViewOnClickPatch : ModulePatch
                 switch (button)
                 {
                     case PointerEventData.InputButton.Left:
-                        if (ShowMeTheMoney.Client.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
+                        if (Plugin.Configuration!.EnableTraderQuickSell.IsEnabled())
                         {
                             BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Trader, [.. itemsToSell]);
                             result = false;
@@ -55,7 +55,7 @@ public class GridItemViewOnClickPatch : ModulePatch
                         break;
 
                     case PointerEventData.InputButton.Right:
-                        if (ShowMeTheMoney.Client.Plugin.Configuration!.EnableFleaPrices.IsEnabled())
+                        if (Plugin.Configuration!.EnableFleaQuickSell.IsEnabled())
                         {
                             BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Flea, [.. itemsToSell]);
                             result = false;
@@ -64,8 +64,11 @@ public class GridItemViewOnClickPatch : ModulePatch
                         break;
 
                     case PointerEventData.InputButton.Middle:
-                        BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Best, [.. itemsToSell]);
-                        result = false;
+                        if (Plugin.Configuration!.EnableBestTradeQuickSell.IsEnabled())
+                        {
+                            BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Best, [.. itemsToSell]);
+                            result = false;
+                        }
 
                         break;
 

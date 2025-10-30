@@ -84,10 +84,10 @@ public class BrokerService
         {
             TradeItem tradeItem = new(item);
 
-            if (ShowMeTheMoney.Client.Plugin.Configuration!.EnableTraderPrices.IsEnabled() && (brokerTradeType == BrokerTradeTypeEnum.Trader || brokerTradeType == BrokerTradeTypeEnum.Best))
+            if (brokerTradeType == BrokerTradeTypeEnum.Trader || brokerTradeType == BrokerTradeTypeEnum.Best)
                 TraderPriceService.Instance.GetBestTraderPrice(tradeItem);
 
-            if (ShowMeTheMoney.Client.Plugin.Configuration!.EnableFleaPrices.IsEnabled() && SptSession.Session.RagFair.Available && (brokerTradeType == BrokerTradeTypeEnum.Flea || brokerTradeType == BrokerTradeTypeEnum.Best))
+            if (SptSession.Session.RagFair.Available && (brokerTradeType == BrokerTradeTypeEnum.Flea || brokerTradeType == BrokerTradeTypeEnum.Best))
                 FleaPriceService.Instance.GetFleaPrice(tradeItem, true);
 
             tradeItems.Add(tradeItem);
