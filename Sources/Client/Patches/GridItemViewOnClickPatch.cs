@@ -8,7 +8,6 @@ using HarmonyLib;
 using SPT.Reflection.Patching;
 using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.EFT;
-using SwiftXP.SPT.Common.Loggers;
 using SwiftXP.SPT.Common.Sessions;
 using SwiftXP.SPT.ShowMeTheMoney.Client.Patches;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Services;
@@ -119,12 +118,12 @@ public class GridItemViewOnClickPatch : ModulePatch
         return SptSession.Session.Profile.Examined(item)
             && (!item.IsContainer || (item.IsContainer && item.IsEmpty()))
             && item.PinLockState != EItemPinLockState.Locked
-            && ItemIsFirAndAllowToBeSold(item)
-            && ItemsIsNotFirAndAllowToBeSold(item)
+            && ItemIsFirAndAllowedToBeSold(item)
+            && ItemsIsNotFirAndAllowedToBeSold(item)
             && !(item.Owner.OwnerType != EOwnerType.Profile && item.Owner.GetType() == typeof(TraderControllerClass));
     }
 
-    private static bool ItemIsFirAndAllowToBeSold(Item item)
+    private static bool ItemIsFirAndAllowedToBeSold(Item item)
     {
         if (Plugin.Configuration!.DoNotSellFoundInRaidItems.IsEnabled()
             && item.MarkedAsSpawnedInSession
@@ -136,7 +135,7 @@ public class GridItemViewOnClickPatch : ModulePatch
         return true;
     }
 
-    private static bool ItemsIsNotFirAndAllowToBeSold(Item item)
+    private static bool ItemsIsNotFirAndAllowedToBeSold(Item item)
     {
         if (!item.MarkedAsSpawnedInSession && RagFairClass.Settings.isOnlyFoundInRaidAllowed)
         {
