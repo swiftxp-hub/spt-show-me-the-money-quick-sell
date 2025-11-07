@@ -105,6 +105,7 @@ public class BrokerService
         foreach (TradeItem tradeItem in tradeItems.OrderByDescending(x => x.FleaPrice?.SingleObjectPrice ?? int.MinValue))
         {
             if (tradeItem.Item.CanSellOnRagfair && tradeItem.FleaPrice != null
+                && (!RagFairClass.Settings.isOnlyFoundInRaidAllowed || (RagFairClass.Settings.isOnlyFoundInRaidAllowed && tradeItem.Item.MarkedAsSpawnedInSession))
                 && (tradeItem.TraderPrice is null || tradeItem.FleaPrice.GetComparePriceInRouble() > tradeItem.TraderPrice.GetComparePriceInRouble()))
             {
                 if (result.Any(x => x.ItemTemplateId == tradeItem.Item.TemplateId))
@@ -136,6 +137,7 @@ public class BrokerService
             if (tradeItem.TraderPrice != null
                 && (tradeItem.FleaPrice is null
                     || tradeItem.TraderPrice.GetComparePriceInRouble() > tradeItem.FleaPrice.GetComparePriceInRouble()
+                    || (RagFairClass.Settings.isOnlyFoundInRaidAllowed && !tradeItem.Item.MarkedAsSpawnedInSession)
                     || Plugin.Configuration!.SellToTraderIfFleaSlotsFull.IsEnabled()))
             {
                 if (result.Any(x => x.TraderId == tradeItem.TraderPrice.TraderId))

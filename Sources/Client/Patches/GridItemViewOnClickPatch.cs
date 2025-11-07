@@ -119,7 +119,6 @@ public class GridItemViewOnClickPatch : ModulePatch
             && (!item.IsContainer || (item.IsContainer && item.IsEmpty()))
             && item.PinLockState != EItemPinLockState.Locked
             && ItemIsFirAndAllowedToBeSold(item)
-            && ItemsIsNotFirAndAllowedToBeSold(item)
             && !(item.Owner.OwnerType != EOwnerType.Profile && item.Owner.GetType() == typeof(TraderControllerClass));
     }
 
@@ -128,16 +127,6 @@ public class GridItemViewOnClickPatch : ModulePatch
         if (Plugin.Configuration!.DoNotSellFoundInRaidItems.IsEnabled()
             && item.MarkedAsSpawnedInSession
             && !Plugin.Configuration!.ForceSellFoundInRaidItemsKey.Value.IsPressed())
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    private static bool ItemsIsNotFirAndAllowedToBeSold(Item item)
-    {
-        if (!item.MarkedAsSpawnedInSession && RagFairClass.Settings.isOnlyFoundInRaidAllowed)
         {
             return false;
         }
