@@ -1,7 +1,3 @@
-A client modification for SPT (Single Player Tarkov).
-
-**Please note that this mod only works in conjunction with the [Show Me The Money SPT-mod](https://forge.sp-tarkov.com/mod/2299/show-me-the-money).**
-
 ___
 
 ## Tabs {.tabset}
