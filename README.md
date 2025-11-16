@@ -1,48 +1,55 @@
 ___
+As many of you have seen in the recent announcements from the SPT developers on Discord about the changes with Tarkov 1.0, the long-term outlook for SPT and FIKA is uncertain. If you haven’t read their message yet, you can find it here:
 
-## Tabs {.tabset}
+https://discord.com/channels/875684761291599922/875706629260197908/1439239841895158022
 
-### SPT 4.0.x
+FIKA will no longer be adding major new features, focusing instead on support and bug fixes for as long as SPT remains viable.
+
+For my mod, I’ll be taking a similar approach: I’ll continue providing maintenance updates and fixing bugs, but I don’t currently plan to develop new large-scale features. The project has grown far beyond what I expected when I started it, and it has genuinely been great to read your feedback and turn it into improvements. Thank you for every comment and conversation on Discord.
+
+The mod’s source code is available on GitHub, so if anyone wants to fork it and build new features on top of it, feel free - you have my blessing.
+___
+
 #### What does it do?
 
-This mod allows you to quickly sell items from your inventory to traders or on the flea market using a configurable keyboard shortcut combined with the left, middle, or right mouse button. By default:
+In the grand tradition of making life marginally easier (and infinitely more entertaining), this mod allows you to **instantly sell items** from your inventory to traders or the flea market using a configurable keyboard shortcut combined with whichever mouse button you feel most emotionally connected to.  
 
-- Q + Left-mouse click → Sell to trader  
-- Q + Right-mouse click → Sell on flea market  
-- Q + Middle-mouse click → Sell at the best price (trader or flea market)  
+By default, the universe is arranged thus:
 
-The configuration settings from the "Show Me The Money" SPT-mod are applied automatically by this quick-sale addon mod.
+- **Q + Left-click** → Sell to trader (the financially sensible option)  
+- **Q + Right-click** → Sell on flea market (the entrepreneurial-but-risky option)  
+- **Q + Middle-click** → Sell at *the best price*, as determined by arcane calculation and a faint whiff of magic  
 
-With [UIFixes](https://forge.sp-tarkov.com/mod/1342/ui-fixes) v5.0.2 or later by Tyfon, multiple items can be selected and sold simultaneously. Items of the same type are automatically bundled when selling on the flea market.  
+All relevant configuration settings from the venerable **Show Me The Money** mod are automatically applied, as if by an invisible accountant lurking in the background.
+
+If you’re using [UIFixes](https://forge.sp-tarkov.com/mod/1342/ui-fixes) v5.0.2 or later (Tyfon’s delightful gift to humanity), you can even select **multiple items** and sell them all at once. When selling on the flea market, items of the same type are automatically bundled. Like socks in a dryer, except these actually stay together.
 
 #### Requirements
 
-- [Show Me The Money SPT-mod](https://forge.sp-tarkov.com/mod/2299/show-me-the-money) v2.2.0 or newer
+- You must possess the mighty **[Show Me The Money](https://forge.sp-tarkov.com/mod/2299/show-me-the-money)** SPT-mod, version **2.2.0 or newer**, without which this quick-sell addon would spend its days staring listlessly into the void.
 
 #### Installation
 
-Extract the contents of the `.zip` or `.7z` file into your SPT directory.  
+Extract the contents of the `.zip` or `.7z` file into your SPT directory with all the elegance and grace of a caffeinated space hamster.
 
-You should end up with the following file in your SPT directory:
+After that, you should find exactly this file in your SPT installation:
 ```
 - C:\yourSPTfolder\BepInEx\plugins\com.swiftxp.spt.showmethemoney.quicksell\SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.dll
 ```
 
 ##### If you use the Fika headless client
 
-There is no need to install this mod on your Fika headless client. In fact, I recommend **not** installing it there.  
-
-If you use [Corter's Mod Sync](https://github.com/c-orter/ModSync), it is recommended to add this mod to your `Exclusions.json`. [See his FAQ on adding sync exclusions](https://github.com/c-orter/ModSync/wiki/Configuration#exclusions).
+Splendidly simple advice: **do not install this mod there.** Nothing good will come from doing so. The client will ignore it, you’ll think it’s broken, and the universe will sigh. If you’re using [Corter’s Mod Sync](https://github.com/c-orter/ModSync), please add this mod to your `Exclusions.json`.
 
 #### Configuration
 
-Use the BepInEx configurator to adjust mod settings (usually accessible by pressing F12 or F1 in-game):
+Adjust all settings through the BepInEx configurator (summonable through **F12** or **F1**, assuming the stars are aligned and your keyboard cooperates):
 
 ![BepInEx Plugin Configuration](https://raw.githubusercontent.com/swiftxp-hub/spt-show-me-the-money-quick-sell/refs/heads/main/Assets/plugin-configuration.png)
 
 #### Remarks
 
-- Quick-selling is currently only possible from the inventory screen.
+- Quick-selling is currently possible **only from the inventory screen**, likely because attempting to do it mid-raid would tear a hole in the fabric of space-time (and also be wildly unbalanced).
 
 #### Known compatibility
 
@@ -50,66 +57,6 @@ Use the BepInEx configurator to adjust mod settings (usually accessible by press
 
 ---
 
-### SPT 3.11.x
-#### What does it do?
-
-This mod allows you to quickly sell items from your inventory to traders or on the flea market using a configurable keyboard shortcut combined with the left, middle, or right mouse button. By default:
-
-- Q + Left-mouse click → Sell to trader  
-- Q + Right-mouse click → Sell on flea market  
-- Q + Middle-mouse click → Sell at the best price (trader or flea market)  
-
-The configuration settings from the "Show Me The Money" SPT-mod are applied automatically.  
-
-With [UIFixes](https://forge.sp-tarkov.com/mod/1342/ui-fixes) v4.2.2 or later by Tyfon, multiple items can be selected and sold simultaneously. Items of the same type are automatically bundled when selling on the flea market.  
-
-**Note:** Always back up your SPT profiles before installing new mods.
-
-#### Requirements
-
-- [Show Me The Money SPT-mod](https://forge.sp-tarkov.com/mod/2299/show-me-the-money) v1.6.1 or newer for SPT 3.11.x
-
-#### Installation
-
-Extract the contents of the `.zip` or `.7z` file into your SPT directory.  
-
-You should end up with the following file in your SPT directory:
-```
-- C:\yourSPTfolder\BepInEx\plugins\SwiftXP.SPT.ShowMeTheMoney.QuickSell.dll
-```
-
-##### If you use the Fika headless client
-
-There is no need to install this mod on your Fika headless client. In fact, I recommend **not** installing it there.  
-
-If you use [Corter's Mod Sync](https://github.com/c-orter/ModSync), it is recommended to add this mod to your `Exclusions.json`. [See his FAQ on adding sync exclusions](https://github.com/c-orter/ModSync/wiki/Configuration#exclusions).
-
-#### Configuration
-
-Use the BepInEx configurator to adjust mod settings (usually accessible by pressing F12 or F1 in-game):
-
-![BepInEx Plugin Configuration](https://raw.githubusercontent.com/swiftxp-hub/spt-show-me-the-money-quick-sell/refs/heads/main-spt311/Assets/plugin-configuration.png)
-
-#### Remarks
-
-- Quick-selling is currently only possible from the inventory screen.
-
-#### Known compatibility
-
-- [UIFixes](https://forge.sp-tarkov.com/mod/1342/ui-fixes) v4.2.2 or later for SPT 3.11.x by Tyfon  
-
-#### Known issues
-
-- When using [Stash Search](https://forge.sp-tarkov.com/mod/2148/stash-search) by ArchangelWTF, if a search filter is active and you sell items to a trader, the money from the sale may not appear in your stash. To resolve this, clear the search, sell another item to a trader, and the money will then appear.
-
-#### Support for 3.11.x
-
-I will try to continue supporting SPT 3.11.x as long as the SPT team also supports this version. However, support cannot be guaranteed. Bug fixes and minor adjustments are the only guaranteed updates.
-
-{.endtabset}
-
-___
-
 ##### Support and feature requests
 
-Please note that all my mods are maintained in my spare time, so support requests may be handled with limited availability.
+All support and requests for new features will be handled as time permits, often between cups of tea and existential reflection. Please be patient. The universe is large, confusing, and full of bugs.
