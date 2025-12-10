@@ -4,14 +4,15 @@
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
 
-    <AssemblyName>SwiftXP.SPT.ShowMeTheMoney.QuickSell</AssemblyName>
+    <AssemblyName>SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client</AssemblyName>
     <Product>Show Me The Money - Quick Sell</Product>
-    <Version>1.1.0</Version>
+    <Version>1.2.0</Version>
     <RestoreAdditionalProjectSources>
       https://api.nuget.org/v3/index.json;
       https://nuget.bepinex.dev/v3/index.json
     </RestoreAdditionalProjectSources>
-    <RootNamespace>SwiftXP.SPT.ShowMeTheMoney.QuickSell</RootNamespace>
+    <RootNamespace>SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client</RootNamespace>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,12 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <!-- <Compile Include="$(MSBuildThisFileDirectory)\..\spt-common\**\*.cs" /> -->
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="..\spt-shared-dlls\*.dll" />
-    <Reference Include="..\spt-show-me-the-money\bin\Release\netstandard2.1\SwiftXP.SPT.ShowMeTheMoney.dll" />
+    <Reference Include="$(MSBuildThisFileDirectory)\..\..\..\spt311-shared-dlls\*.dll" />
+    <Reference Include="$(MSBuildThisFileDirectory)\..\..\..\spt-show-me-the-money\Sources\Client\bin\Release\netstandard2.1\SwiftXP.SPT.ShowMeTheMoney.Client.dll" />
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">

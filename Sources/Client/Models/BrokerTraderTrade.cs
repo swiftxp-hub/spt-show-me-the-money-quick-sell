@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using SwiftXP.SPT.ShowMeTheMoney.Models;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Models;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Models;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
 
-public record BrokerTraderTrade
+public class BrokerTraderTrade
 {
     public BrokerTraderTrade(string traderId, params TradeItem[] items)
     {

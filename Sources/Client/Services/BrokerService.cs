@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Comfort.Common;
@@ -10,12 +9,12 @@ using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.Constants;
 using SwiftXP.SPT.Common.Notifications;
 using SwiftXP.SPT.Common.Sessions;
-using SwiftXP.SPT.ShowMeTheMoney.Models;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Enums;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Models;
-using SwiftXP.SPT.ShowMeTheMoney.Services;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Models;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Services;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Enums;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Services;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Services;
 
 public class BrokerService
 {
@@ -106,6 +105,7 @@ public class BrokerService
         foreach (TradeItem tradeItem in tradeItems.OrderByDescending(x => x.FleaPrice?.SingleObjectPrice ?? int.MinValue))
         {
             if (tradeItem.Item.CanSellOnRagfair && tradeItem.FleaPrice != null
+                && (!RagFairClass.Settings.isOnlyFoundInRaidAllowed || (RagFairClass.Settings.isOnlyFoundInRaidAllowed && tradeItem.Item.MarkedAsSpawnedInSession))
                 && (tradeItem.TraderPrice is null || tradeItem.FleaPrice.GetComparePriceInRouble() > tradeItem.TraderPrice.GetComparePriceInRouble()))
             {
                 if (result.Any(x => x.ItemTemplateId == tradeItem.Item.TemplateId))
@@ -137,6 +137,7 @@ public class BrokerService
             if (tradeItem.TraderPrice != null
                 && (tradeItem.FleaPrice is null
                     || tradeItem.TraderPrice.GetComparePriceInRouble() > tradeItem.FleaPrice.GetComparePriceInRouble()
+                    || (RagFairClass.Settings.isOnlyFoundInRaidAllowed && !tradeItem.Item.MarkedAsSpawnedInSession)
                     || Plugin.Configuration!.SellToTraderIfFleaSlotsFull.IsEnabled()))
             {
                 if (result.Any(x => x.TraderId == tradeItem.TraderPrice.TraderId))

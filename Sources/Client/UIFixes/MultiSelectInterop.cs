@@ -1,6 +1,3 @@
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.using BepInEx;
-#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
-
 using BepInEx;
 using BepInEx.Bootstrap;
 using EFT.InventoryLogic;
@@ -45,12 +42,18 @@ namespace UIFixesInterop
 
         private static bool? UIFixesLoaded;
 
-
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         private static Type MultiSelectType;
-
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         private static MethodInfo GetCountMethod;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         private static MethodInfo GetItemsMethod;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
         private static MethodInfo ApplyMethod;
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
         /// <value><c>Count</c> represents the number of items in the current selection, 0 if UI Fixes is not present.</value>
         public static int Count
@@ -86,8 +89,9 @@ namespace UIFixesInterop
         /// </summary>
         /// <param name="action">The action to call on each item.</param>
         /// <param name="itemUiContext">Optional <c>ItemUiContext</c>; will use <c>ItemUiContext.Instance</c> if not provided.</param>
-
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         public static void Apply(Action<Item> action, ItemUiContext itemUiContext = null)
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         {
             if (!Loaded())
             {
@@ -110,7 +114,9 @@ namespace UIFixesInterop
         /// <param name="func">The function to call on each item</param>
         /// <param name="itemUiContext">Optional <c>ItemUiContext</c>; will use <c>ItemUiContext.Instance</c> if not provided.</param>
         /// <returns>A <c>Task</c> that will complete when all the function calls are complete.</returns>
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
         public static Task Apply(Func<Item, Task> func, ItemUiContext itemUiContext = null)
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
         {
             if (!Loaded())
             {
@@ -143,6 +149,3 @@ namespace UIFixesInterop
         }
     }
 }
-
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.

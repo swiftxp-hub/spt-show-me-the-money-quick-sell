@@ -8,16 +8,15 @@ using HarmonyLib;
 using SPT.Reflection.Patching;
 using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.EFT;
-using SwiftXP.SPT.Common.Loggers;
 using SwiftXP.SPT.Common.Sessions;
-using SwiftXP.SPT.ShowMeTheMoney.Patches;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Services;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Patches;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Patches;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 
-public class ItemViewOnClickPatch : ModulePatch
+public class GridItemViewOnClickPatch : ModulePatch
 {
     protected override MethodBase GetTargetMethod() =>
         AccessTools.FirstMethod(typeof(GridItemView), x => x.Name == nameof(GridItemView.OnClick));
@@ -46,7 +45,7 @@ public class ItemViewOnClickPatch : ModulePatch
                 switch (button)
                 {
                     case PointerEventData.InputButton.Left:
-                        if (ShowMeTheMoney.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
+                        if (Plugin.Configuration!.EnableTraderQuickSell.IsEnabled())
                         {
                             BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Trader, [.. itemsToSell]);
                             result = false;
@@ -55,7 +54,7 @@ public class ItemViewOnClickPatch : ModulePatch
                         break;
 
                     case PointerEventData.InputButton.Right:
-                        if (ShowMeTheMoney.Plugin.Configuration!.EnableFleaPrices.IsEnabled())
+                        if (Plugin.Configuration!.EnableFleaQuickSell.IsEnabled())
                         {
                             BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Flea, [.. itemsToSell]);
                             result = false;
@@ -64,7 +63,7 @@ public class ItemViewOnClickPatch : ModulePatch
                         break;
 
                     case PointerEventData.InputButton.Middle:
-                        if (ShowMeTheMoney.Plugin.Configuration!.EnableTraderPrices.IsEnabled())
+                        if (Plugin.Configuration!.EnableBestTradeQuickSell.IsEnabled())
                         {
                             BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Best, [.. itemsToSell]);
                             result = false;
@@ -79,13 +78,13 @@ public class ItemViewOnClickPatch : ModulePatch
 
             if (!result)
             {
-                ShowMeTheMoney.Plugin.HoveredItem = null;
+                ShowMeTheMoney.Client.Plugin.HoveredItem = null;
                 SimpleTooltipShowPatch.Instance?.Close();
             }
         }
         catch (Exception exception)
         {
-            SimpleSptLogger.Instance.LogException(exception);
+            Plugin.SptLogger!.LogException(exception);
         }
 
         return result;
@@ -96,7 +95,7 @@ public class ItemViewOnClickPatch : ModulePatch
         List<Item> itemsToSell = [];
 
         if (UIFixesInterop.MultiSelect.Count > 0)
-            itemsToSell.AddRange(UIFixesInterop.MultiSelect.Items);
+            itemsToSell.AddRange([.. UIFixesInterop.MultiSelect.Items]);
 
         else if (__instance?.Item is not null)
             itemsToSell.Add(__instance!.Item);
@@ -119,11 +118,11 @@ public class ItemViewOnClickPatch : ModulePatch
         return SptSession.Session.Profile.Examined(item)
             && (!item.IsContainer || (item.IsContainer && item.IsEmpty()))
             && item.PinLockState != EItemPinLockState.Locked
-            && ItemIsFirAndAllowToBeSold(item)
+            && ItemIsFirAndAllowedToBeSold(item)
             && !(item.Owner.OwnerType != EOwnerType.Profile && item.Owner.GetType() == typeof(TraderControllerClass));
     }
 
-    private static bool ItemIsFirAndAllowToBeSold(Item item)
+    private static bool ItemIsFirAndAllowedToBeSold(Item item)
     {
         if (Plugin.Configuration!.DoNotSellFoundInRaidItems.IsEnabled()
             && item.MarkedAsSpawnedInSession
