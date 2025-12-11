@@ -28,13 +28,22 @@ If you’re using [UIFixes](https://forge.sp-tarkov.com/mod/1342/ui-fixes) v5.0.
 
 - You must possess the mighty **[Show Me The Money](https://forge.sp-tarkov.com/mod/2299/show-me-the-money)** SPT-mod, version **2.2.0 or newer**, without which this quick-sell addon would spend its days staring listlessly into the void.
 
-#### Installation
+#### SPT 4.x Installation 
 
 Extract the contents of the `.zip` or `.7z` file into your SPT directory with all the elegance and grace of a caffeinated space hamster.
 
 After that, you should find exactly this file in your SPT installation:
 ```
 - C:\yourSPTfolder\BepInEx\plugins\com.swiftxp.spt.showmethemoney.quicksell\SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.dll
+```
+
+#### SPT 3.11.x Installation 
+
+Extract the contents of the `.zip` or `.7z` file into your SPT directory with all the elegance and grace of a caffeinated space hamster.
+
+After that, you should find exactly this file in your SPT installation:
+```
+- C:\yourSPTfolder\BepInEx\plugins\SwiftXP.SPT.ShowMeTheMoney.QuickSell.dll
 ```
 
 ##### If you use the Fika headless client
