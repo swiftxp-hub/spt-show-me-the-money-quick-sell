@@ -6,7 +6,7 @@ using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client;
 
 [BepInPlugin("com.swiftxp.spt.showmethemoney.quicksell", MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-[BepInDependency("com.SPT.custom", "3.11.4")]
+[BepInDependency("com.SPT.custom", "3.11.0")]
 [BepInDependency("com.swiftxp.spt.showmethemoney", "1.9.0")]
 [BepInProcess("EscapeFromTarkov.exe")]
 public class Plugin : BaseUnityPlugin
