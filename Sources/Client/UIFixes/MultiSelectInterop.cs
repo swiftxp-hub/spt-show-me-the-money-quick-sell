@@ -38,21 +38,33 @@ namespace UIFixesInterop
     /// </summary>
     internal static class MultiSelect
     {
+#pragma warning disable IDE1006 // Naming Styles
         private static readonly Version RequiredVersion = new Version(2, 5);
+#pragma warning restore IDE1006 // Naming Styles
 
+#pragma warning disable IDE1006 // Naming Styles
         private static bool? UIFixesLoaded;
+#pragma warning restore IDE1006 // Naming Styles
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable IDE1006 // Naming Styles
         private static Type MultiSelectType;
+#pragma warning restore IDE1006 // Naming Styles
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable IDE1006 // Naming Styles
         private static MethodInfo GetCountMethod;
+#pragma warning restore IDE1006 // Naming Styles
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable IDE1006 // Naming Styles
         private static MethodInfo GetItemsMethod;
+#pragma warning restore IDE1006 // Naming Styles
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+#pragma warning disable IDE1006 // Naming Styles
         private static MethodInfo ApplyMethod;
+#pragma warning restore IDE1006 // Naming Styles
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
         /// <value><c>Count</c> represents the number of items in the current selection, 0 if UI Fixes is not present.</value>
@@ -65,7 +77,7 @@ namespace UIFixesInterop
                     return 0;
                 }
 
-                return (int)GetCountMethod.Invoke(null, new object[] { });
+                return (int)GetCountMethod.Invoke(null, Array.Empty<object>());
             }
         }
 
@@ -76,10 +88,10 @@ namespace UIFixesInterop
             {
                 if (!Loaded())
                 {
-                    return new Item[] { };
+                    return Array.Empty<Item>();
                 }
 
-                return (IEnumerable<Item>)GetItemsMethod.Invoke(null, new object[] { });
+                return (IEnumerable<Item>)GetItemsMethod.Invoke(null, Array.Empty<object>());
             }
         }
 

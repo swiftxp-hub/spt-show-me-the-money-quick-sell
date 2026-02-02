@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Comfort.Common;
 using EFT.InventoryLogic;
@@ -11,46 +11,43 @@ using SwiftXP.SPT.Common.Notifications;
 using SwiftXP.SPT.Common.Sessions;
 using SwiftXP.SPT.ShowMeTheMoney.Client.Models;
 using SwiftXP.SPT.ShowMeTheMoney.Client.Services;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Utilities;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Enums;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
 
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Services;
 
-public class BrokerService
+public static class BrokerService
 {
-    private static readonly Lazy<BrokerService> instance = new(() => new BrokerService());
-
-    private BrokerService() { }
-
-    public void Trade(BrokerTradeTypeEnum brokerTradeType, params Item[] items)
+    public static void Trade(BrokerTradeType brokerTradeType, params Item[] items)
     {
         bool soldAnyThing = false;
 
         try
         {
-            if (!SptSession.Session.RagFair.Available && (brokerTradeType == BrokerTradeTypeEnum.Flea || brokerTradeType == BrokerTradeTypeEnum.Best))
-                NotificationsService.Instance.SendLongAlert("ragfair/Unlocked at character LVL {0}".Localized(null).Replace("{0}",
-                    RagFairClass.Settings.minUserLevel.ToString()));
+            if (!SptSession.Session.RagFair.Available && (brokerTradeType == BrokerTradeType.Flea || brokerTradeType == BrokerTradeType.Best))
+                EftNotificationHelper.SendLongAlert("ragfair/Unlocked at character LVL {0}".Localized(null).Replace("{0}",
+                    RagFairClass.Settings.minUserLevel.ToString(CultureInfo.InvariantCulture)));
 
             List<TradeItem> tradeItems = GetTradeItems(brokerTradeType, items);
 
             List<BrokerFleaTrade> brokerFleaTrades = GetBrokerFleaTrades(tradeItems);
             List<BrokerTraderTrade> brokerTraderTrades = GetBrokerTraderTrades(tradeItems);
 
-            if (tradeItems.Any())
+            if (tradeItems.Count != 0)
             {
                 switch (brokerTradeType)
                 {
-                    case BrokerTradeTypeEnum.Trader:
-                        NotificationsService.Instance.SendLongAlert("Trader can't buy this item".Localized(null));
+                    case BrokerTradeType.Trader:
+                        EftNotificationHelper.SendLongAlert("Trader can't buy this item".Localized(null));
                         break;
 
-                    case BrokerTradeTypeEnum.Flea:
-                        NotificationsService.Instance.SendLongAlert("ragfair/This item cannot be placed at ragfair".Localized(null));
+                    case BrokerTradeType.Flea:
+                        EftNotificationHelper.SendLongAlert("ragfair/This item cannot be placed at ragfair".Localized(null));
                         break;
 
-                    case BrokerTradeTypeEnum.Best:
-                        NotificationsService.Instance.SendLongAlert("Not all items could be sold.");
+                    case BrokerTradeType.Best:
+                        EftNotificationHelper.SendLongAlert("Not all items could be sold.");
                         break;
                 }
             }
@@ -65,7 +62,7 @@ public class BrokerService
                 SellItemsToTrader(brokerTraderTrade.TraderId, [.. brokerTraderTrade.TradeItems]);
             }
 
-            soldAnyThing = brokerFleaTrades.Any() || brokerTraderTrades.Any();
+            soldAnyThing = brokerFleaTrades.Count != 0 || brokerTraderTrades.Count != 0;
         }
         finally
         {
@@ -76,7 +73,7 @@ public class BrokerService
         }
     }
 
-    private List<TradeItem> GetTradeItems(BrokerTradeTypeEnum brokerTradeType, Item[] items)
+    private static List<TradeItem> GetTradeItems(BrokerTradeType brokerTradeType, Item[] items)
     {
         List<TradeItem> tradeItems = [];
 
@@ -84,11 +81,11 @@ public class BrokerService
         {
             TradeItem tradeItem = new(item);
 
-            if (brokerTradeType == BrokerTradeTypeEnum.Trader || brokerTradeType == BrokerTradeTypeEnum.Best)
+            if (brokerTradeType == BrokerTradeType.Trader || brokerTradeType == BrokerTradeType.Best)
                 TraderPriceService.Instance.GetBestTraderPrice(tradeItem);
 
-            if (SptSession.Session.RagFair.Available && (brokerTradeType == BrokerTradeTypeEnum.Flea || brokerTradeType == BrokerTradeTypeEnum.Best))
-                FleaPriceService.Instance.GetFleaPrice(tradeItem, true);
+            if (SptSession.Session.RagFair.Available && (brokerTradeType == BrokerTradeType.Flea || brokerTradeType == BrokerTradeType.Best))
+                FleaPriceUtility.GetFleaPrice(tradeItem, true);
 
             tradeItems.Add(tradeItem);
         }
@@ -96,7 +93,7 @@ public class BrokerService
         return tradeItems;
     }
 
-    private List<BrokerFleaTrade> GetBrokerFleaTrades(List<TradeItem> tradeItems)
+    private static List<BrokerFleaTrade> GetBrokerFleaTrades(List<TradeItem> tradeItems)
     {
         List<BrokerFleaTrade> result = [];
 
@@ -112,7 +109,7 @@ public class BrokerService
                 {
                     result.First(x => x.ItemTemplateId == tradeItem.Item.TemplateId).TradeItems.Add(tradeItem);
                 }
-                else if (Plugin.Configuration!.AllowAnyNumberOfFleaOffers.IsEnabled() || currentOffersCount < maxOffersCount)
+                else if (Models.PluginContextDataHolder.Current.Configuration!.AllowAnyNumberOfFleaOffers.IsEnabled() || currentOffersCount < maxOffersCount)
                 {
                     result.Add(new(tradeItem.Item.TemplateId, tradeItem.FleaPrice!.SingleObjectPrice, tradeItem));
                     ++currentOffersCount;
@@ -128,7 +125,7 @@ public class BrokerService
         return result;
     }
 
-    private List<BrokerTraderTrade> GetBrokerTraderTrades(List<TradeItem> tradeItems)
+    private static List<BrokerTraderTrade> GetBrokerTraderTrades(List<TradeItem> tradeItems)
     {
         List<BrokerTraderTrade> result = [];
 
@@ -138,7 +135,7 @@ public class BrokerService
                 && (tradeItem.FleaPrice is null
                     || tradeItem.TraderPrice.GetComparePriceInRouble() > tradeItem.FleaPrice.GetComparePriceInRouble()
                     || (RagFairClass.Settings.isOnlyFoundInRaidAllowed && !tradeItem.Item.MarkedAsSpawnedInSession)
-                    || Plugin.Configuration!.SellToTraderIfFleaSlotsFull.IsEnabled()))
+                    || Models.PluginContextDataHolder.Current.Configuration!.SellToTraderIfFleaSlotsFull.IsEnabled()))
             {
                 if (result.Any(x => x.TraderId == tradeItem.TraderPrice.TraderId))
                 {
@@ -159,7 +156,7 @@ public class BrokerService
         return result;
     }
 
-    private void SellItemsToTrader(string traderId, TradeItem[] tradeItems)
+    private static void SellItemsToTrader(string traderId, TradeItem[] tradeItems)
     {
         TraderClass traderClass = SptSession.Session.GetTrader(traderId);
 
@@ -174,7 +171,7 @@ public class BrokerService
         );
     }
 
-    private void SellItemsOnFlea(int price, TradeItem[] tradeItems)
+    private static void SellItemsOnFlea(int price, TradeItem[] tradeItems)
     {
         string[] itemIds = [.. tradeItems.Select(x => x.Item.Id)];
 
@@ -192,11 +189,9 @@ public class BrokerService
         );
     }
 
-    private void GetFleaSlotsForUser(out int currentOffersCount, out int maxOffersCount)
+    private static void GetFleaSlotsForUser(out int currentOffersCount, out int maxOffersCount)
     {
         currentOffersCount = SptSession.Session.RagFair.MyOffersCount;
         maxOffersCount = SptSession.Session.RagFair.GetMaxOffersCount(SptSession.Session.RagFair.MyRating);
     }
-
-    public static BrokerService Instance => instance.Value;
 }

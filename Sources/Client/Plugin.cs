@@ -1,47 +1,31 @@
 ﻿using BepInEx;
 using SwiftXP.SPT.Common.Loggers;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Configuration;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client;
 
 [BepInPlugin("com.swiftxp.spt.showmethemoney.quicksell", MyPluginInfo.PLUGIN_NAME, MyPluginInfo.PLUGIN_VERSION)]
-[BepInDependency("com.SPT.custom", "4.0.2")]
-[BepInDependency("com.swiftxp.spt.showmethemoney", "2.2.0")]
+[BepInDependency("com.SPT.custom", "4.0.11")]
+[BepInDependency("com.swiftxp.spt.showmethemoney", "2.6.0")]
 [BepInProcess("EscapeFromTarkov.exe")]
 public class Plugin : BaseUnityPlugin
 {
     private void Awake()
     {
-        InitLogger();
-        BindBepInExConfiguration();
+        SimpleSptLogger simpleSptLogger = new(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION);
+        PluginConfiguration pluginConfiguration = new(Config);
+
+        PluginContextDataHolder.SetContextInstances(simpleSptLogger, pluginConfiguration);
+
         EnablePatches();
     }
 
-    private void InitLogger()
+    private static void EnablePatches()
     {
-        SptLogger = new SimpleSptLogger(MyPluginInfo.PLUGIN_GUID, MyPluginInfo.PLUGIN_VERSION);
-    }
-
-    private void BindBepInExConfiguration()
-    {
-        SptLogger!.LogInfo("Bind configuration...");
-
-        Configuration = new PluginConfiguration(Config);
-    }
-
-    private void EnablePatches()
-    {
-        SptLogger!.LogInfo("Enable patches...");
-
         new GridItemViewOnClickPatch().Enable();
         new InventoryScreenClosePatch().Enable();
         new InventoryScreenShowPatch().Enable();
     }
-
-    public static PluginConfiguration? Configuration;
-
-    public static SimpleSptLogger? SptLogger;
-
-    public static bool IsInInventoryScreen;
 }

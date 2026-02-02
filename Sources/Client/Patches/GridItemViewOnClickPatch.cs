@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using EFT.InventoryLogic;
 using EFT.UI.DragAndDrop;
@@ -10,6 +9,7 @@ using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.EFT;
 using SwiftXP.SPT.Common.Sessions;
 using SwiftXP.SPT.ShowMeTheMoney.Client.Patches;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -22,16 +22,20 @@ public class GridItemViewOnClickPatch : ModulePatch
         AccessTools.FirstMethod(typeof(GridItemView), x => x.Name == nameof(GridItemView.OnClick));
 
     [PatchPrefix]
+#pragma warning disable CA1707 // Identifiers should not contain underscores
+
     public static bool Prefix(GridItemView __instance, PointerEventData.InputButton button, Vector2 position, bool doubleClick)
+#pragma warning restore CA1707 // Identifiers should not contain underscores
+
     {
         bool result = true;
 
         try
         {
-            if (!Plugin.IsInInventoryScreen
+            if (!PluginContextDataHolder.Current.IsInInventoryScreen
                 || __instance == null
                 || __instance.Item == null
-                || !Plugin.Configuration!.EnablePlugin.IsEnabled()
+                || !PluginContextDataHolder.Current.Configuration!.EnablePlugin.IsEnabled()
                 || !IsQuickSellKeyPressed()
                 || EFTHelper.IsInRaid)
             {
@@ -40,32 +44,32 @@ public class GridItemViewOnClickPatch : ModulePatch
 
             List<Item> itemsToSell = GetItemsToSell(__instance);
 
-            if (itemsToSell.Any())
+            if (itemsToSell.Count != 0)
             {
                 switch (button)
                 {
                     case PointerEventData.InputButton.Left:
-                        if (Plugin.Configuration!.EnableTraderQuickSell.IsEnabled())
+                        if (PluginContextDataHolder.Current.Configuration!.EnableTraderQuickSell.IsEnabled())
                         {
-                            BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Trader, [.. itemsToSell]);
+                            BrokerService.Trade(Enums.BrokerTradeType.Trader, [.. itemsToSell]);
                             result = false;
                         }
 
                         break;
 
                     case PointerEventData.InputButton.Right:
-                        if (Plugin.Configuration!.EnableFleaQuickSell.IsEnabled())
+                        if (PluginContextDataHolder.Current.Configuration!.EnableFleaQuickSell.IsEnabled())
                         {
-                            BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Flea, [.. itemsToSell]);
+                            BrokerService.Trade(Enums.BrokerTradeType.Flea, [.. itemsToSell]);
                             result = false;
                         }
 
                         break;
 
                     case PointerEventData.InputButton.Middle:
-                        if (Plugin.Configuration!.EnableBestTradeQuickSell.IsEnabled())
+                        if (PluginContextDataHolder.Current.Configuration!.EnableBestTradeQuickSell.IsEnabled())
                         {
-                            BrokerService.Instance.Trade(Enums.BrokerTradeTypeEnum.Best, [.. itemsToSell]);
+                            BrokerService.Trade(Enums.BrokerTradeType.Best, [.. itemsToSell]);
                             result = false;
                         }
 
@@ -78,13 +82,14 @@ public class GridItemViewOnClickPatch : ModulePatch
 
             if (!result)
             {
-                ShowMeTheMoney.Client.Plugin.HoveredItem = null;
+                ShowMeTheMoney.Client.Models.PluginContextDataHolder.SetHoveredItem(null);
                 SimpleTooltipShowPatch.Instance?.Close();
             }
         }
         catch (Exception exception)
         {
-            Plugin.SptLogger!.LogException(exception);
+            PluginContextDataHolder.Current.SptLogger?
+                .LogException(exception);
         }
 
         return result;
@@ -124,9 +129,9 @@ public class GridItemViewOnClickPatch : ModulePatch
 
     private static bool ItemIsFirAndAllowedToBeSold(Item item)
     {
-        if (Plugin.Configuration!.DoNotSellFoundInRaidItems.IsEnabled()
+        if (PluginContextDataHolder.Current.Configuration!.DoNotSellFoundInRaidItems.IsEnabled()
             && item.MarkedAsSpawnedInSession
-            && !Plugin.Configuration!.ForceSellFoundInRaidItemsKey.Value.IsPressed())
+            && !PluginContextDataHolder.Current.Configuration!.ForceSellFoundInRaidItemsKey.Value.IsPressed())
         {
             return false;
         }
@@ -136,10 +141,10 @@ public class GridItemViewOnClickPatch : ModulePatch
 
     private static bool IsQuickSellKeyPressed()
     {
-        if (Plugin.Configuration!.QuickSellKey.Value.IsPressed())
+        if (PluginContextDataHolder.Current.Configuration!.QuickSellKey.Value.IsPressed())
             return true;
 
-        if (Plugin.Configuration!.DoNotSellFoundInRaidItems.IsEnabled() && Plugin.Configuration!.ForceSellFoundInRaidItemsKey.Value.IsPressed())
+        if (PluginContextDataHolder.Current.Configuration!.DoNotSellFoundInRaidItems.IsEnabled() && PluginContextDataHolder.Current.Configuration!.ForceSellFoundInRaidItemsKey.Value.IsPressed())
             return true;
 
         return false;

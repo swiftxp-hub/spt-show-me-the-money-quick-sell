@@ -7,8 +7,8 @@ public class BrokerTraderTrade
 {
     public BrokerTraderTrade(string traderId, params TradeItem[] items)
     {
-        this.TraderId = traderId;
-        this.TradeItems.AddRange(items);
+        TraderId = traderId;
+        TradeItems.AddRange(items);
     }
 
     public string TraderId { get; private set; }

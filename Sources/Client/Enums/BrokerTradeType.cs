@@ -1,6 +1,6 @@
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Enums;
 
-public enum BrokerTradeTypeEnum
+public enum BrokerTradeType
 {
     Trader,
 
