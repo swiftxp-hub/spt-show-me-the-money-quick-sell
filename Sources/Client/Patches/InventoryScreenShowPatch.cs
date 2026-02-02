@@ -3,7 +3,7 @@ using EFT.UI;
 using HarmonyLib;
 using SPT.Reflection.Patching;
 using SwiftXP.SPT.Common.EFT;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Data;
 
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 

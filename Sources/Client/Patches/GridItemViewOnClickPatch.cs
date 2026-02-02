@@ -9,7 +9,7 @@ using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.EFT;
 using SwiftXP.SPT.Common.Sessions;
 using SwiftXP.SPT.ShowMeTheMoney.Client.Patches;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Data;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Services;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -82,7 +82,7 @@ public class GridItemViewOnClickPatch : ModulePatch
 
             if (!result)
             {
-                ShowMeTheMoney.Client.Models.PluginContextDataHolder.SetHoveredItem(null);
+                ShowMeTheMoney.Client.Data.PluginContextDataHolder.SetHoveredItem(null);
                 SimpleTooltipShowPatch.Instance?.Close();
             }
         }

@@ -1,7 +1,7 @@
 using SwiftXP.SPT.Common.Loggers;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Configuration;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Data;
 
 public static class PluginContextDataHolder
 {

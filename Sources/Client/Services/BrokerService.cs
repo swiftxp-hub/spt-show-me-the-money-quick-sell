@@ -9,11 +9,11 @@ using SwiftXP.SPT.Common.ConfigurationManager;
 using SwiftXP.SPT.Common.Constants;
 using SwiftXP.SPT.Common.Notifications;
 using SwiftXP.SPT.Common.Sessions;
-using SwiftXP.SPT.ShowMeTheMoney.Client.Models;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Data;
 using SwiftXP.SPT.ShowMeTheMoney.Client.Services;
 using SwiftXP.SPT.ShowMeTheMoney.Client.Utilities;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Enums;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Data;
 
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Services;
 
@@ -109,7 +109,7 @@ public static class BrokerService
                 {
                     result.First(x => x.ItemTemplateId == tradeItem.Item.TemplateId).TradeItems.Add(tradeItem);
                 }
-                else if (Models.PluginContextDataHolder.Current.Configuration!.AllowAnyNumberOfFleaOffers.IsEnabled() || currentOffersCount < maxOffersCount)
+                else if (Data.PluginContextDataHolder.Current.Configuration!.AllowAnyNumberOfFleaOffers.IsEnabled() || currentOffersCount < maxOffersCount)
                 {
                     result.Add(new(tradeItem.Item.TemplateId, tradeItem.FleaPrice!.SingleObjectPrice, tradeItem));
                     ++currentOffersCount;
@@ -135,7 +135,7 @@ public static class BrokerService
                 && (tradeItem.FleaPrice is null
                     || tradeItem.TraderPrice.GetComparePriceInRouble() > tradeItem.FleaPrice.GetComparePriceInRouble()
                     || (RagFairClass.Settings.isOnlyFoundInRaidAllowed && !tradeItem.Item.MarkedAsSpawnedInSession)
-                    || Models.PluginContextDataHolder.Current.Configuration!.SellToTraderIfFleaSlotsFull.IsEnabled()))
+                    || Data.PluginContextDataHolder.Current.Configuration!.SellToTraderIfFleaSlotsFull.IsEnabled()))
             {
                 if (result.Any(x => x.TraderId == tradeItem.TraderPrice.TraderId))
                 {

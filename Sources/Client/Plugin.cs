@@ -1,7 +1,7 @@
 ﻿using BepInEx;
 using SwiftXP.SPT.Common.Loggers;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Configuration;
-using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
+using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Data;
 using SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Patches;
 
 namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client;

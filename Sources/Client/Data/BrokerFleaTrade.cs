@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using SwiftXP.SPT.ShowMeTheMoney.Client.Models;
+using SwiftXP.SPT.ShowMeTheMoney.Client.Data;
 
-namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Models;
+namespace SwiftXP.SPT.ShowMeTheMoney.QuickSell.Client.Data;
 
 public class BrokerFleaTrade
 {
